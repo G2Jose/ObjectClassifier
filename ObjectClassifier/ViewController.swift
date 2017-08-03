@@ -22,7 +22,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         let session = AVCaptureSession()
         session.sessionPreset = AVCaptureSession.Preset.photo
         guard
-            let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
+            let backCamera = AVCaptureDevice.default(for: .video),
             let input = try? AVCaptureDeviceInput(device: backCamera)
             else { return session }
         session.addInput(input)
@@ -48,7 +48,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         guard let visionModel = try? VNCoreMLModel(for: Inceptionv3().model)
             else { fatalError("Can't load VisionML model") }
         let classificationRequest = VNCoreMLRequest(model: visionModel, completionHandler: handleClassifications)
-        classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOptionCenterCrop
+        classificationRequest.imageCropAndScaleOption = .centerCrop
         self.requests = [classificationRequest]
     }
     
@@ -77,7 +77,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         if let cameraIntrinsicData = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, nil) {
             requestOptions = [.cameraIntrinsics:cameraIntrinsicData]
         }
-        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: 1, options: requestOptions)
+        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: CGImagePropertyOrientation(rawValue: 1)!, options: requestOptions)
         do {
             try imageRequestHandler.perform(self.requests)
         } catch {
