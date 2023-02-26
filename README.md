@@ -1,6 +1,8 @@
 # Object Classifier
 
-An iOS app that recognizes objects from the camera. Uses the CoreML and Vision frameworks. Object recognition is done using the [Inception v3](https://github.com/tensorflow/models/tree/master/inception) neural network model. 
+[Read more about this project on my blog](https://blog.georgejose.com/coreml-swift-object-recognizer/).
+
+An iOS app that recognizes objects from the camera. Uses the CoreML and Vision frameworks. Object recognition is done using the [Inception v3](https://github.com/tensorflow/models/tree/master/inception) neural network model.
 
 ## Screenshots
 
